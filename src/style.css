@@ -1,0 +1,21 @@
+.root {
+-fx-background-color: black;
+-fx-font-size: 12px;
+-fx-font-family: "Times New Roman";
+}
+
+.label {
+    -fx-text-fill: white;
+}
+
+.text-field {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+    -fx-font-family: "Georgia";
+}
+
+.button {
+    -fx-background-color: lightgreen;
+    -fx-font-family: "Times New Roman";
+    -fx-text-fill: black;
+}

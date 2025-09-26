@@ -131,7 +131,8 @@ public class Lab04_EdricTran extends Application{
         gp.add(confSemFeesText, 1, 6);
         gp.add(lodgingChargesText, 1, 7);
 
-        Scene scene = new Scene(gp, 450, 450);
+        Scene scene = new Scene(gp, 525, 450);
+        scene.getStylesheets().add("style.css");
         
         stage.setTitle("Hello World");
         stage.setScene(scene);
