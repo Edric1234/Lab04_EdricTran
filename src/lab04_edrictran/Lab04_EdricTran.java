@@ -38,6 +38,10 @@ public class Lab04_EdricTran extends Application{
         Label nTaxiCharges = new Label("Amount of taxi charges, if any: ");
         Label confSemFees = new Label("Conference or seminar registration fees, if any: ");
         Label lodgingCharges = new Label("Lodging charges, per night: ");
+        Label messageLabel = new Label();
+        Label totalExpensesLabel = new Label();
+        Label allowableLabel = new Label();
+        Label savedOrExcess = new Label();
         
         TextField nDaysText = new TextField();
         TextField nAirFareText = new TextField();
@@ -63,11 +67,58 @@ public class Lab04_EdricTran extends Application{
         gp.add(nTaxiCharges, 0, 5);
         gp.add(confSemFees, 0, 6);
         gp.add(lodgingCharges, 0, 7);
-        
+        gp.add(messageLabel, 0, 9, 2, 1);
+        gp.add(totalExpensesLabel, 0, 10, 2, 1);
+        gp.add(allowableLabel, 0, 11, 2, 1);
+        gp.add(savedOrExcess, 0, 12, 2 ,1);
+
         Button calc = new Button("Calculate");
         gp.add(calc, 0, 8);
         
         calc.setOnAction(event -> {
+            try {
+                int days = Integer.parseInt(nDaysText.getText());
+                int airfare = Integer.parseInt(nAirFareText.getText());
+                int carRental = Integer.parseInt(nCarRentalFeesText.getText());
+                double miles = Double.parseDouble(nMilesDrivenText.getText());
+                int parking = Integer.parseInt(nParkingFeesText.getText());
+                int taxi = Integer.parseInt(nTaxiChargesText.getText());
+                int confFees = Integer.parseInt(confSemFeesText.getText());
+                int lodging = Integer.parseInt(lodgingChargesText.getText());
+                
+                if (days < 0 || airfare < 0 || carRental < 0 || miles < 0 ||
+                parking < 0 || taxi < 0 || confFees < 0 || lodging < 0) {
+                      messageLabel.setText(" Negative numbers are not allowed");
+                      messageLabel.setStyle("-fx-text-fill: red; -fx-font-weight: bold;");
+                      totalExpensesLabel.setText("");
+                      allowableLabel.setText("");
+                      savedOrExcess.setText("");
+                      return;
+        }
+                double totalExpenses = airfare + carRental + parking + taxi 
+                        + confFees + (lodging * days);
+                double allowableExpenses = days * (37 + 10 + 20 + 95) + (miles * 0.27);
+                
+                totalExpensesLabel.setText("Total Expenses: $" + totalExpenses);
+                allowableLabel.setText("Allowable Expenses: $" + allowableExpenses);
+
+                double difference = totalExpenses - allowableExpenses;
+                if (difference > 0) {
+                    savedOrExcess.setText("Excess: $" + difference);
+                } else {
+                    savedOrExcess.setText("Amount Saved: " + "$" + difference * -1);
+                }
+                messageLabel.setText("");
+                
+                
+                
+            } catch (NumberFormatException e) {
+                messageLabel.setText("Enter whole numbers only");
+                messageLabel.setStyle("-fx-text-fill: red; -fx-font-weight: bold;");
+                totalExpensesLabel.setText("");
+                allowableLabel.setText("");
+                savedOrExcess.setText("");
+            }
         });
 
         
@@ -79,14 +130,12 @@ public class Lab04_EdricTran extends Application{
         gp.add(nTaxiChargesText, 1, 5);
         gp.add(confSemFeesText, 1, 6);
         gp.add(lodgingChargesText, 1, 7);
-        
 
-        Scene scene = new Scene(gp, 800, 800);
+        Scene scene = new Scene(gp, 450, 450);
         
         stage.setTitle("Hello World");
         stage.setScene(scene);
         stage.show();
 
     }
-    
 }
